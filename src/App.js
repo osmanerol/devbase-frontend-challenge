@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import FormPage from './pages/FormPage';
+import { observer } from 'mobx-react-lite';
+import store from './store';
 
-function App() {
+const App =observer(() => {
+  useEffect(()=>{
+      store.getCountries();
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <div>
+        <Switch>
+          <Route path="/" exact strict component={HomePage} />
+          <Route path="/country/:country" exact strict component={FormPage} />
+        </Switch>
+      </div>
+    );
+  }
+) 
 
 export default App;
